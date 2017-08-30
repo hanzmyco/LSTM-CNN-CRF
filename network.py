@@ -7,15 +7,22 @@ class network(object):
      char_vocab_size,grad_clip, num_filters=20,filter_size =3, char_embedd_dim=30,
      n_hidden_LSTM=200, max_char_per_word=45):
      self.input_x=C.sequence.input_variable(shape=sequence_length)
-     self.input_x_char = C.sequence.input_variable(shape=max_char_per_word)
-     self.finput_y = C.sequence.input_variable(shape=sequence_length)
-     self.dropout_keep_prob=C.sequence.input_variable()
-     self.sequences_lengths = C.sequence.input_variable(shape=[None])
+     self.input_x_char = C.sequence.input_variable(shape=[sequence_length,max_char_per_word])
+     self.input_y = C.sequence.input_variable(shape=sequence_length)
+     self.dropout_keep_prob=C.sequence.input_variable(shape=1)
+     self.sequences_lengths = C.sequence.input_variable()
 
      input1 = Input(char_vocab_size, is_sparse=True)  # word sequence, as one-hot vector, sparse format
      self.char_embedding = Embedding(char_embedd_dim)(input1)
+     self.char_embedding.init()
+     print (self.char_weights)
+     #input2 = Input()
+
+a=network(5,5,5,5,5,1)
 
 
+
+'''
 # Creates the reader
 def create_reader(path, is_training, input_dim, label_dim):
     return C.io.MinibatchSource(C.io.CTFDeserializer(path, C.io.StreamDefs(
@@ -87,5 +94,4 @@ if __name__ == '__main__':
 
     error, _ = train_sequence_classifier()
     print("Error: %f" % error)
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
+'''
